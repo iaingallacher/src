@@ -1,9 +1,5 @@
 ﻿<ProjectState>
   <Version>1.0</Version>
   <FileID>23b6ad75-dd07-46a7-b180-7f8c1e4dc26a</FileID>
-  <OpenFiles>
-    <File>Startup.pss</File>
-    <File>Globals.ps1</File>
-    <File>MainForm.psf</File>
-  </OpenFiles>
+  <OpenFiles />
 </ProjectState>
