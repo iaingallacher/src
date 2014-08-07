@@ -1056,8 +1056,16 @@ function Out-Excel
 {
 	param ($xlsFile)
 	[int]$colO = 15
+	
 	[int]$rowBase = 7
 	[int]$rowStd = 9
+	[int]$rowPrem = 21
+	[int]$rowShrMB = 26
+	[int]$rowResMB = 27
+	[int]$rowRsc = 32
+	[int]$rowSvc = 33
+	[int]$rowAsg = 34
+	
 	
 	
 	$xls = New-Object -ComObject excel.application
@@ -1069,11 +1077,17 @@ function Out-Excel
 	
 	$wksPricing.Cells.Item($rowBase, $colO) = $global:billBase.Length
 	$wksPricing.Cells.Item($rowStd, $colO) = $global:billStandard.Length
+	$wksPricing.Cells.Item($rowPrem, $colO) = $global:billPremium.Length
+	$wksPricing.Cells.Item($rowShrMB, $colO) = $global:billSharedMB
+	$wksPricing.Cells.Item($rowResMB, $colO) = $global:billResourceMB
+	$wksPricing.Cells.Item($rowRsc, $colO) = $global:billResources.Length
+	$wksPricing.Cells.Item($rowSvc, $colO) = $global:billServiceAccounts.Length
+	$wksPricing.Cells.Item($rowAsg, $colO) = $global:billASGStaff.Length
 	
-	$wksBase = $wkbook.Worksheets.add()
-	$wksBase.Name = 'BASE Users'
+	#$wksBase = $wkbook.Worksheets.add()
+	#$wksBase.Name = 'BASE Users'
 	
-	$col = 1
+	<#$col = 1
 	$row = 1
 	
 	foreach ($item in $global:billBase)
@@ -1085,7 +1099,7 @@ function Out-Excel
 				$wksBase.Cells.Item($row, $col) = $key.Key
 			}
 		}
-	}
+	}#>
 	
 	
 	$wkbook.Save()
@@ -1124,9 +1138,7 @@ function Process-Data
 	{
 		$ex = $false
 				
-		$global:billBase += $element
-		
-		
+				
 		if ($element.'Distinguished Name' -like "*resources*")
 		{
 			$global:billResources += $element
@@ -1163,6 +1175,8 @@ function Process-Data
 			}
 			
 		}
+		else { $global:billBase += $element }
+		
 		#Premium
 		if ($ex -eq $false)
 		{
@@ -1235,11 +1249,6 @@ $sfdExportXls_FileOk=[System.ComponentModel.CancelEventHandler]{
 
 
 ]]></Code>
-  <Bookmarks />
-  <BreakPoints>
-    <Line Disabled="False">238</Line>
-  </BreakPoints>
-  <TracePoints />
   <Mode>1</Mode>
   <Assemblies>
     <Assembly>System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
